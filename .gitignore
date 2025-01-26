@@ -1,0 +1,11 @@
+# environment
+.env
+!.env.example
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# vscode
+.vscode/
