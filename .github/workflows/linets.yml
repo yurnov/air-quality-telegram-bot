@@ -1,4 +1,4 @@
-name: ✎ Linters
+name: 📝 Linters
 on:
   push:
     branches:

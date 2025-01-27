@@ -5,8 +5,7 @@ LABEL org.opencontainers.image.source=https://github.com/yurnov/air-quality-tele
         org.opencontainers.image.authors="@yurnov" \
         org.opencontainers.image.title="Air Quality Telegram Bot" \
         org.opencontainers.image.description="A simple Telegram bot that provides air quality information for a given location." \
-        org.opencontainers.image.licenses="MIT" \
-        org.opencontainers.image.created=${BUILD_DATE}
+        org.opencontainers.image.licenses="MIT"
 
 WORKDIR /app
 
