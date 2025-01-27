@@ -1,4 +1,9 @@
 # Telegram Bot for Air Quality Monitoring
+![python-version](https://img.shields.io/badge/python-3.12-blue.svg)
+[![license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Linters](https://github.com/yurnov/air-quality-telegram-bot/actions/workflows/linets.yml/badge.svg)](https://github.com/yurnov/air-quality-telegram-bot/actions/workflows/linets.yml)
+[![Release GHCR Image](https://github.com/yurnov/air-quality-telegram-bot/actions/workflows/build_and_push_image.yml/badge.svg)](https://github.com/yurnov/air-quality-telegram-bot/actions/workflows/build_and_push_image.yml)
 
 This repository contains a Telegram bot that monitors air quality for a specified city and sends alerts when the air quality reaches certain thresholds. The bot is written in Python and runs in a Docker.
 
