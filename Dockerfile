@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 ARG BUILD_DATE
 
-LABEL org.opencontainers.image.source = "https://github.com/yurnov/air-quality-telegram-bot" \
+LABEL org.opencontainers.image.source="https://github.com/yurnov/air-quality-telegram-bot" \
         org.opencontainers.image.authors="@yurnov" \
         org.opencontainers.image.title="Air Quality Telegram Bot" \
         org.opencontainers.image.description="A simple Telegram bot that provides air quality information for a given location." \
