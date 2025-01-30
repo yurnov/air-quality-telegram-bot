@@ -65,6 +65,7 @@ aqi10 = None
 aqi25 = None
 last_aqi = None
 
+
 # Function to pull data from the API
 def pull_data():
     global location
