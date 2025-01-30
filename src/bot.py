@@ -59,7 +59,7 @@ if not SLIENT or SLIENT.lower() not in ["true", "false"]:
 else:
     SLIENT = SLIENT.lower()
 
-WAGI_FEED_API=f"https://api.waqi.info/feed/{CITY.lower()}/?token={API_KEY}"
+WAGI_FEED_API = f"https://api.waqi.info/feed/{CITY.lower()}/?token={API_KEY}"
 
 # Global variable to store the last air quality index
 last_aqi = None
@@ -67,6 +67,7 @@ aqi10 = None
 aqi25 = None
 location = None
 location_url = None
+
 
 # Function to pull data from the API
 def pull_data():
@@ -104,39 +105,73 @@ def pull_data():
     except Exception as e:
         logger.error(f'Error pulling data: {e}')
 
+
 # Function to send answer to the /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
 
-    message={
-        "en": f"Hi {user.mention_html()}, I'm a Air Quality Index bot, I will help to to know actual AQI in {CITY}. Please use /help for more information!",
-        "uk": f"Привіт {user.mention_html()}, я бот індексу якості повітря, я допоможу вам дізнатися актуальний AQI в {CITY}. Будь ласка, скористайтеся /help для отримання додаткової інформації!",
-        "pl": f"Cześć {user.mention_html()}, jestem botem wskaźnika jakości powietrza, pomogę Ci dowiedzieć się aktualnego AQI w {CITY}. Skorzystaj z /help, aby uzyskać więcej informacji!"
+    message = {
+        "en": (
+            f"Hi {user.mention_html()}, I'm a Air Quality Index bot, I will help to to know actual AQI in {CITY}. "
+            f"Please use /help for more information!"
+        ),
+        "uk": (
+            f"Привіт {user.mention_html()}, я бот індексу якості повітря, я допоможу вам дізнатися актуальний AQI в {CITY}. "
+            f"Будь ласка, скористайтеся /help для отримання додаткової інформації!"
+        ),
+        "pl": (
+            f"Cześć {user.mention_html()}, jestem botem wskaźnika jakości powietrza, pomogę Ci dowiedzieć się aktualnego AQI w {CITY}. "
+            f"Skorzystaj z /help, aby uzyskać więcej informacji!"
+        ),
     }
     await update.message.reply_html(message[LANGUAGE])
+
 
 # Function to send answer to the /help command
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
     user = update.effective_user
 
-    message={
-        "en": f"I'm a Air Quality Index bot, I got information for {location} from {location_url}.\n\n\nPlease use command /aqi or just send any text to get fresh data.\n\nThe air quality index (AQI) is a measure of how clean or polluted the air is.\n\n Less than 50 considered as the Good level, 51 to 100 is Moderate, 101 to 150 is Unhealthy for Sensitive Groups, 151 to 200 is Unhealthy, 201 to 300 is Very Unhealthy and level more than 300 considered as Hazardous.\n\n\nMore details can be found <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>here</a>",
-        "uk": f"Я бот індексу якості повітря, я отримав інформацію для {location} з {location_url}.\n\n\nБудь ласка, скористайтеся командою /aqi або просто надішліть будь-який текст, щоб отримати свіжі дані.\n\nІндекс якості повітря (AQI) - це показник того, наскільки чистим або забрудненим є повітря.\n\n Менше 50 вважається рівнем Good, від 51 до 100 - Moderate, від 101 до 150 - Unhealthy for Sensitive Groups, від 151 до 200 - Unhealthy, від 201 до 300 - Very Unhealthy, а рівень більше 300 вважається Hazardous.<br/><br/>Додаткові відомості можна знайти <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>тут</a>",
-        "pl": f"Jestem botem wskaźnika jakości powietrza, otrzymałem informacje dla {location} z {location_url}.\n\n\nSkorzystaj z /aqi albo po prostu wyślij dowolny tekst, aby uzyskać świeże dane.\n\nWskaźnik jakości powietrza (AQI) to miara czystości lub zanieczyszczenia powietrza.\n\nMniej niż 50 uważa się za dobry poziom, od 51 do 100 jest umiarkowany, od 101 do 150 jest niezdrowy dla osób wrażliwych, od 151 do 200 jest niezdrowy, od 201 do 300 jest bardzo niezdrowy, a poziom powyżej 300 uważa się za niebezpieczny.\n\nWięcej szczegółów można znaleźć <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>tutaj</a>"
-     }
+    message = {
+        "en": (
+            f"I'm a Air Quality Index bot, I got information for {location} from {location_url}.\n\n\nPlease use command "
+            f"/aqi or just send any text to get fresh data.\n\nThe air quality index (AQI) is a measure of how clean or "
+            f"polluted the air is.\n\n Less than 50 considered as the Good level, 51 to 100 is Moderate, 101 to 150 is "
+            f"Unhealthy for Sensitive Groups, 151 to 200 is Unhealthy, 201 to 300 is Very Unhealthy and level more than "
+            f"300 considered as Hazardous.\n\n\nMore details can be found <a href='https://aqicn.org/faq/2015-03-15/air-"
+            f"quality-nowcast-a-beginners-guide/'>here</a>"
+        ),
+        "uk": (
+            f"Я бот індексу якості повітря, я отримав інформацію для {location} з {location_url}.\n\n\nБудь ласка, "
+            f"скористайтеся командою /aqi або просто надішліть будь-який текст, щоб отримати свіжі дані.\n\nІндекс якості "
+            f"повітря (AQI) - це показник того, наскільки чистим або забрудненим є повітря.\n\n Менше 50 вважається рівнем "
+            f"Good, від 51 до 100 - Moderate, від 101 до 150 - Unhealthy for Sensitive Groups, від 151 до 200 - Unhealthy, "
+            f"від 201 до 300 - Very Unhealthy, а рівень більше 300 вважається Hazardous.<br/><br/>Додаткові відомості можна "
+            f"знайти <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>тут</a>"
+        ),
+        "pl": (
+            f"Jestem botem wskaźnika jakości powietrza, otrzymałem informacje dla {location} z {location_url}.\n\n\nSkorzystaj "
+            f"z /aqi albo po prostu wyślij dowolny tekst, aby uzyskać świeże dane.\n\nWskaźnik jakości powietrza (AQI) to miara "
+            f"czystości lub zanieczyszczenia powietrza.\n\nMniej niż 50 uważa się za dobry poziom, od 51 do 100 jest umiarkowany, "
+            f"od 101 do 150 jest niezdrowy dla osób wrażliwych, od 151 do 200 jest niezdrowy, od 201 do 300 jest bardzo niezdrowy, "
+            f"a poziom powyżej 300 uważa się za niebezpieczny.\n\nWięcej szczegółów można znaleźć <a href='https://aqicn.org/faq/"
+            f"2015-03-15/air-quality-nowcast-a-beginners-guide/'>tutaj</a>"
+        ),
+    }
     await update.message.reply_html(message[LANGUAGE])
+
 
 async def send_aqi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /aqi or any text is issued."""
 
-    message={
+    message = {
         "en": f"Current AQI in {CITY} is {aqi10} for PM10 and {aqi25} for PM2.5.",
         "uk": f"Поточний AQI в {CITY} становить {aqi10} для PM10 та {aqi25} для PM2.5.",
-        "pl": f"Aktualny AQI w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5."
+        "pl": f"Aktualny AQI w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5.",
     }
     await update.message.reply_html(message[LANGUAGE])
+
 
 # Function to send alert messages
 def send_alert(level):
@@ -145,23 +180,23 @@ def send_alert(level):
             'en': {
                 'unhealthy': 'Be aware, air quality reaches unhealthy levels',
                 'hazardous': 'Be aware, air quality reaches hazardous levels',
-                'good': 'Air quality back to a good level'
+                'good': 'Air quality back to a good level',
             },
             'uk': {
                 'unhealthy': 'Будьте обережні, якість повітря досягає нездорового рівня',
                 'hazardous': 'Будьте обережні, якість повітря досягає небезпечного рівня',
-                'good': 'Якість повітря повертається до хорошого рівня'
+                'good': 'Якість повітря повертається до хорошого рівня',
             },
             'pl': {
                 'unhealthy': 'Uważaj, jakość powietrza osiąga niezdrowy poziom',
                 'hazardous': 'Uważaj, jakość powietrza osiąga niebezpieczny poziom',
-                'good': 'Jakość powietrza wraca do dobrego poziomu'
-            }
+                'good': 'Jakość powietrza wraca do dobrego poziomu',
+            },
         }
         common_message = {
             'en': f"Air Quality Index in {CITY} is {aqi10} for PM10 and {aqi25} for PM2.5",
             'uk': f"Індекс якості повітря в {CITY} становить {aqi10} для PM10 та {aqi25} для PM2.5",
-            'pl': f"Wskaźnik jakości powietrza w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5"
+            'pl': f"Wskaźnik jakości powietrza w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5",
         }
 
         text = f"{messages[LANGUAGE][level]}. {common_message[LANGUAGE]}."
@@ -173,10 +208,12 @@ def send_alert(level):
         except requests.exceptions.RequestException as e:
             logger.error(f"Error while sending message: {e}")
 
+
 def run_schedule():
     while True:
         schedule.run_pending()
         time.sleep(1)
+
 
 def main() -> None:
 

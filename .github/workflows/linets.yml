@@ -27,7 +27,7 @@ jobs:
           python -m pip install black
       - name: Lint Python code with black
         run: |
-          black --diff --skip-string-normalization --line-length 120 src/
+          black --check --diff --skip-string-normalization --line-length 120 src/
 
       - name: Lint Dockerfile with hadolint
         uses: hadolint/hadolint-action@v3.1.0
