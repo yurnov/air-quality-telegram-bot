@@ -114,7 +114,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "uk": f"Привіт {user.mention_html()}, я бот індексу якості повітря, я допоможу вам дізнатися актуальний AQI в {CITY}. Будь ласка, скористайтеся /help для отримання додаткової інформації!",
         "pl": f"Cześć {user.mention_html()}, jestem botem wskaźnika jakości powietrza, pomogę Ci dowiedzieć się aktualnego AQI w {CITY}. Skorzystaj z /help, aby uzyskać więcej informacji!"
     }
-    await update.message.reply_html(message[LANGUAGE],reply_markup=ForceReply(selective=True))
+    await update.message.reply_html(message[LANGUAGE])
 
 # Function to send answer to the /help command
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -122,11 +122,11 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
 
     message={
-        "en": f"I'm a Air Quality Index bot, I got information for {location} from {location_url}. The air quality index (AQI) is a measure of how clean or polluted the air is. Data source: waqi.info",
-        "uk": f"Я бот індексу якості повітря, я отримав інформацію для {location} з {location_url}. Індекс якості повітря (AQI) - це міра того, наскільки чисте або забруднене повітря. Джерело даних: waqi.info",
-        "pl": f"Jestem botem wskaźnika jakości powietrza, otrzymałem informacje dla {location} z {location_url}. Wskaźnik jakości powietrza (AQI) to miara czystości lub zanieczyszczenia powietrza. Źródło danych: waqi.info"
+        "en": f"I'm a Air Quality Index bot, I got information for {location} from {location_url}.\n\n\nPlease use command /aqi or just send any text to get fresh data.\n\nThe air quality index (AQI) is a measure of how clean or polluted the air is.\n\n Less than 50 considered as the Good level, 51 to 100 is Moderate, 101 to 150 is Unhealthy for Sensitive Groups, 151 to 200 is Unhealthy, 201 to 300 is Very Unhealthy and level more than 300 considered as Hazardous.\n\n\nMore details can be found <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>here</a>",
+        "uk": f"Я бот індексу якості повітря, я отримав інформацію для {location} з {location_url}.\n\n\nБудь ласка, скористайтеся командою /aqi або просто надішліть будь-який текст, щоб отримати свіжі дані.\n\nІндекс якості повітря (AQI) - це показник того, наскільки чистим або забрудненим є повітря.\n\n Менше 50 вважається рівнем Good, від 51 до 100 - Moderate, від 101 до 150 - Unhealthy for Sensitive Groups, від 151 до 200 - Unhealthy, від 201 до 300 - Very Unhealthy, а рівень більше 300 вважається Hazardous.<br/><br/>Додаткові відомості можна знайти <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>тут</a>",
+        "pl": f"Jestem botem wskaźnika jakości powietrza, otrzymałem informacje dla {location} z {location_url}.\n\n\nSkorzystaj z /aqi albo po prostu wyślij dowolny tekst, aby uzyskać świeże dane.\n\nWskaźnik jakości powietrza (AQI) to miara czystości lub zanieczyszczenia powietrza.\n\nMniej niż 50 uważa się za dobry poziom, od 51 do 100 jest umiarkowany, od 101 do 150 jest niezdrowy dla osób wrażliwych, od 151 do 200 jest niezdrowy, od 201 do 300 jest bardzo niezdrowy, a poziom powyżej 300 uważa się za niebezpieczny.\n\nWięcej szczegółów można znaleźć <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>tutaj</a>"
      }
-    await update.message.reply_html(message[LANGUAGE],reply_markup=ForceReply(selective=True))
+    await update.message.reply_html(message[LANGUAGE])
 
 async def send_aqi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /aqi or any text is issued."""
@@ -136,7 +136,7 @@ async def send_aqi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "uk": f"Поточний AQI в {CITY} становить {aqi10} для PM10 та {aqi25} для PM2.5.",
         "pl": f"Aktualny AQI w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5."
     }
-    await update.message.reply_html(message[LANGUAGE],reply_markup=ForceReply(selective=True))
+    await update.message.reply_html(message[LANGUAGE])
 
 # Function to send alert messages
 def send_alert(level):
