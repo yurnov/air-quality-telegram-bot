@@ -20,7 +20,7 @@ LANGUAGE = os.getenv('LANGUAGE').lower()
 CHAT_ID = os.getenv('CHAT_ID')
 PULL_INTERVAL = int(os.getenv('PULL_INTERVAL', 10))
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').lower()
-SLIENT = os.getenv('SLIENT')
+SILENT = os.getenv('SILENT')
 
 # Enable initial logging
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
@@ -50,11 +50,11 @@ if not CHAT_ID:
 if LOG_LEVEL is None or LOG_LEVEL.lower() not in ["debug", "info", "warning", "error", "critical"]:
     LOG_LEVEL = "info"
     logger.info("LOG_LEVEL is not defined or invalid, using default value info")
-if not SLIENT or SLIENT.lower() not in ["true", "false"]:
-    logger.warning("SLIENT is not defined in .env file, or not a boolean, using a default value false")
-    SLIENT = "false"
+if not SILENT or SILENT.lower() not in ["true", "false"]:
+    logger.warning("SILENT is not defined in .env file, or not a boolean, using a default value false")
+    SILENT = "false"
 else:
-    SLIENT = SLIENT.lower()
+    SILENT = SILENT.lower()
 
 WAGI_FEED_API = f"https://api.waqi.info/feed/{CITY.lower()}/?token={API_KEY}"
 
@@ -223,7 +223,7 @@ def send_alert(level):
 
         text = f"{messages[LANGUAGE][level]}. {common_message[LANGUAGE]}."
         TG_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_API_KEY}/sendMessage"
-        params = {"chat_id": CHAT_ID, "text": text, "disable_notification": SLIENT}
+        params = {"chat_id": CHAT_ID, "text": text, "disable_notification": SILENT}
         try:
             response = requests.get(url, params=params, timeout=20)
             response.raise_for_status()

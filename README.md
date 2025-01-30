@@ -59,7 +59,7 @@ or use ready to use image:
 - `LANGUAGE`: Language for the bot's messages (optional, default is 'en'). Supported languages: English (`en`), Ukrainian (`uk`), Polish (`pl`)
 - `CHAT_ID`: Chat ID for sending alerts (optional)
 - `PULL_INTERVAL`: Interval in minutes for pulling data from the API (optional, default is 10, min is 5, max is 60)
-- `SLIENT`: Sends the message silently. Users will receive a notification with no sound, see [reference](https://telegram.org/blog/channels-2-0#silent-messages)
+- `SILENT`: Sends the message silently. Users will receive a notification with no sound, see [reference](https://telegram.org/blog/channels-2-0#silent-messages)
 
 ## Bot Functionality
 
