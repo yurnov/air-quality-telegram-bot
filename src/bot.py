@@ -22,9 +22,6 @@ PULL_INTERVAL = int(os.getenv('PULL_INTERVAL', 10))
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').lower()
 SLIENT = os.getenv('SLIENT')
 
-print(f"LANGUAGE: {LANGUAGE}")
-print(f"LANGUAGE type: {LANGUAGE.__class__}")
-
 # Enable initial logging
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 # set higher logging level for httpx to avoid all GET and POST requests being logged
@@ -125,13 +122,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             f"Skorzystaj z /help, aby uzyskać więcej informacji!"
         ),
     }
-    await update.message.reply_html(message[LANGUAGE])
+
+    try:
+
+        await update.message.reply_html(message[LANGUAGE])
+
+    except Exception as e:
+        logger.error(f"Error while sending message: {e}")
 
 
 # Function to send answer to the /help command
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
-    user = update.effective_user
 
     message = {
         "en": (
@@ -147,7 +149,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             f"скористайтеся командою /aqi або просто надішліть будь-який текст, щоб отримати свіжі дані.\n\nІндекс якості "
             f"повітря (AQI) - це показник того, наскільки чистим або забрудненим є повітря.\n\n Менше 50 вважається рівнем "
             f"Good, від 51 до 100 - Moderate, від 101 до 150 - Unhealthy for Sensitive Groups, від 151 до 200 - Unhealthy, "
-            f"від 201 до 300 - Very Unhealthy, а рівень більше 300 вважається Hazardous.<br/><br/>Додаткові відомості можна "
+            f"від 201 до 300 - Very Unhealthy, а рівень більше 300 вважається Hazardous.\n\nДодаткові відомості можна "
             f"знайти <a href='https://aqicn.org/faq/2015-03-15/air-quality-nowcast-a-beginners-guide/'>тут</a>"
         ),
         "pl": (
@@ -159,18 +161,37 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             f"2015-03-15/air-quality-nowcast-a-beginners-guide/'>tutaj</a>"
         ),
     }
-    await update.message.reply_html(message[LANGUAGE])
+
+    try:
+        await update.message.reply_html(message[LANGUAGE])
+    except Exception as e:
+        logger.error(f"Error while sending message: {e}")
 
 
 async def send_aqi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /aqi or any text is issued."""
 
-    message = {
-        "en": f"Current AQI in {CITY} is {aqi10} for PM10 and {aqi25} for PM2.5.",
-        "uk": f"Поточний AQI в {CITY} становить {aqi10} для PM10 та {aqi25} для PM2.5.",
-        "pl": f"Aktualny AQI w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5.",
-    }
-    await update.message.reply_html(message[LANGUAGE])
+    if None in (aqi10, aqi25):
+        error_messages = {
+            "en": "AQI data is not available at the moment. Please try again later.",
+            "uk": "Дані AQI наразі недоступні. Спробуйте ще раз пізніше.",
+            "pl": "Dane AQI nie są obecnie dostępne. Spróbuj ponownie później.",
+        }
+        await update.message.reply_text(error_messages[LANGUAGE])
+        return
+
+    else:
+
+        message = {
+            "en": f"Current AQI in {CITY} is {aqi10} for PM10 and {aqi25} for PM2.5.",
+            "uk": f"Поточний AQI в {CITY} становить {aqi10} для PM10 та {aqi25} для PM2.5.",
+            "pl": f"Aktualny AQI w {CITY} wynosi {aqi10} dla PM10 i {aqi25} dla PM2.5.",
+        }
+
+        try:
+            await update.message.reply_html(message[LANGUAGE])
+        except Exception as e:
+            logger.error(f"Error while sending message: {e}")
 
 
 # Function to send alert messages
