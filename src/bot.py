@@ -59,12 +59,11 @@ else:
 WAGI_FEED_API = f"https://api.waqi.info/feed/{CITY.lower()}/?token={API_KEY}"
 
 # Global variable to store the last air quality index
-last_aqi = None
-aqi10 = None
-aqi25 = None
 location = None
 location_url = None
-
+aqi10 = None
+aqi25 = None
+last_aqi = None
 
 # Function to pull data from the API
 def pull_data():
@@ -72,6 +71,7 @@ def pull_data():
     global location_url
     global aqi10
     global aqi25
+    global last_aqi
     try:
         response = requests.get(WAGI_FEED_API)
         data = response.json()
