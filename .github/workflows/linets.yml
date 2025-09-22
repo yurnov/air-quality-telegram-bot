@@ -30,7 +30,7 @@ jobs:
           black --check --diff --skip-string-normalization --line-length 120 src/
 
       - name: Lint Dockerfile with hadolint
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@v3.3.0
         with:
           dockerfile: Dockerfile
           failure-threshold: error
